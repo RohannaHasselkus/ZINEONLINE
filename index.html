@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+.container {
+    position: relative;
+    width: 200px;
+    height: 260px;
+    margin: 0 auto 40px auto;
+
+    -webkit-perspective: 800px;
+       -moz-perspective: 800px;
+        -ms-perspective: 800px;
+         -o-perspective: 800px;
+            perspective: 800px;
+}
+.container .card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    -webkit-transition: -webkit-transform 1s;
+       -moz-transition:    -moz-transform 1s;
+        -ms-transition:     -ms-transform 1s;
+         -o-transition:      -o-transform 1s;
+            transition:         transform 1s;
+
+    -webkit-transform-style: preserve-3d;
+       -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+         -o-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+}
+.container .card .face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 140px;
+    font-weight: bold;
+    line-height: 260px;
+    color: #fff;
+    text-align: center;
+
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+.container .card.flipped,
+.container .card .face2 {
+    -webkit-transform: rotateY(180deg);
+       -moz-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+         -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+}
+.container .card .face .content1 {background-color: #7ad;}
+.container .card .face .content2 {background-color: #7da;}
+.container .card .face .content3 {background-color: #d7a;}
+.container .card .face .content4 {background-color: #fad997;}
+
+.store {
+    display: none;
+}
+.buttons {
+    text-align: center;
+}
+
+</style>
+<script type="text/javascript">
+var topCard = 1;
+var facingUp = true;
+
+function flipCard(n) {
+    if (topCard === n) return;
+
+    // Replace the contents of the current back-face with the contents
+    // of the element that should rotate into view.
+    var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+    var nextContent = $('.store' + n).html(); 
+    var nextContent = $('.store li:nth-child(' + n + ')').html(); 
+    curBackFace.html(nextContent);
+
+    // Rotate the content
+    $('.card').toggleClass('flipped');
+    topCard = n;
+    facingUp = !facingUp;
+}
+
+$('#flip1').on('click', function(){ flipCard(1); });
+$('#flip2').on('click', function(){ flipCard(2); });
+$('#flip3').on('click', function(){ flipCard(3); });
+$('#flip4').on('click', function(){ flipCard(4); });
+
+$(document).ready(function(){
+    // Add the appropriate content to the initial "front side"
+    var frontFace = $('.face1');
+    var frontContent = $('.store li:first-child').html(); 
+    frontFace.html(frontContent);
+});
+</script>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="face face1"></div>
+        <div class="face face2"></div>
+    </div>
+
+    <ul class="store">
+        <li>
+            <div class="content content1">1</div>
+        </li>
+        <li>
+            <div class="content content2">2</div>
+        </li>
+        <li>
+            <div class="content content3">3</div>
+        </li>
+        <li>
+            <div class="content content4">4</div>
+        </li>
+    </ul>
+</div>
+
+<div class="buttons">
+    <input type="button" id="flip1" value="Flip 1"/>
+    <input type="button" id="flip2" value="Flip 2"/>
+    <input type="button" id="flip3" value="Flip 3"/>
+    <input type="button" id="flip4" value="Flip 4"/>
+</div>
+</body>
+<html>
